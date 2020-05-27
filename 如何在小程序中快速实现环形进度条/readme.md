@@ -1,3 +1,5 @@
+转载请注明出处: [https://github.com/lucaszhu2zgf/blog](https://github.com/lucaszhu2zgf/blog)
+
 在小程序开发过程中经常涉及到一些图表类需求，其中环形进度条比较属于比较常见的需求
 
 ![效果预览](images/0.png)
