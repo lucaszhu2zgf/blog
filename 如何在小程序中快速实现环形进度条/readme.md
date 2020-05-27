@@ -1,6 +1,6 @@
 在小程序开发过程中经常涉及到一些图表类需求，其中环形进度条比较属于比较常见的需求
 
-![正常模式](images/0.png)
+![效果预览](images/0.png)
 
 `[中间的文字部分需要自己实现，因为每个项目不同，本工具只实现进度条]`
 
@@ -39,7 +39,7 @@ wx.drawCanvas({
 ```
 效果如下：
 
-![正常模式](images/1.png)
+![底圈预览](images/1.png)
 
 接下来就要画绿色的进度条，渐变暂时先不考虑
 ```
@@ -60,11 +60,11 @@ convert_length(length) {
 }
 ```
 
-![正常模式](images/2.png)
+![着色预览](images/2.png)
 
 似乎完成了一大部分，先自测看看不是满圆的情况是啥样子，比如现在剩余车位是120个
 
-![正常模式](images/3.png)
+<img src="images/3.png" width="240" alt="旋转预览">
 
 因为圆弧函数arc默认的起点在3点钟方向，而设计想要的圆弧的起点从12点钟方向开始，现在这样是没法达到预期效果。是不是可以使用css让canvas自己旋转-90deg就好了呢？于是我在上面的canvas样式中新增以下规则：
 ```
@@ -74,11 +74,11 @@ convert_length(length) {
 ```
 但是在真机上并不起作用，于是我把新增的样式放到包裹canvas的外层元素上，发现外层元素已经旋转，可是圆弧还是从3点钟方向开始的，唯一能解释这个现象的是官方说：小程序中的canvas使用的是原生组件，所以这样设置css并不能达到我们想要的效果
 
-![正常模式](images/4.png)
+<img src="images/4.png" width="240" alt="旋转原理">
 
 所以必须要在canvas画图的时候把坐标原点移动到弧形圆心，并且在画布内旋转-90deg
 
-![正常模式](images/5.png)
+<img src="images/5.png" width="550" alt="旋转策略设计">
 
 ```
 // 更换原点
@@ -89,17 +89,17 @@ context.rotate(-90 * Math.PI / 180);
 ```
 真机预览效果达成预期
 
-![正常模式](images/6.png)
+<img src="images/6.png" width="240" alt="最终旋转效果">
 
 接下来添加环形渐变效果，但是canvas原本提供的渐变类型只有两种：
 
 1、LinearGradient线性渐变
 
-![正常模式](images/7.png)
+![线性渐变](images/7.png)
 
 2、CircularGradient圆形渐变
 
-![正常模式](images/8.png)
+![圆形渐变](images/8.png)
 
 两种渐变中离设计效果最近的是线性渐变，至于为什么能够形成似乎是随圆形弧度增加而颜色变深的效果也只是控制坐标开始和结束的坐标位置罢了
 ```
@@ -117,11 +117,11 @@ context.stroke();
 ```
 来看一下真机预览效果：
 
-![正常模式](images/9.png)
+<img src="images/9.png" width="240" alt="渐变效果预览">
 
 非常棒，最后就剩下跟随进度条的纽扣效果了
 
-![正常模式](images/10.png)
+<img src="images/10.png" width="240" alt="进度点效果图">
 
 根据三角函数，已知三角形夹角根据公式radian = 2*Math.PI/360*deg，再利用cos和sin函数可以x、y，从而计算出纽扣在各部分半圆的坐标
 ```
@@ -156,7 +156,7 @@ if (mathDeg <= 90) {
 }
 ```
 
-![正常模式](images/11.png)
+![弧度计算公式](images/11.png)
 
 有了纽扣的圆形坐标，最后一步就是按照设计绘制样式了
 
@@ -177,6 +177,6 @@ context.fill();
 ```
 来看一下最终效果
 
-![正常模式](images/12.png)
+<img src="images/12.png" width="240" alt="最终效果">
 
 欢迎大家使用
